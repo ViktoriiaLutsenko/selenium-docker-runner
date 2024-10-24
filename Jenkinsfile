@@ -1,18 +1,30 @@
 pipeline{
+
     agent any
-    stages {
-        stage('Grid up and run tests') {
-            steps {
-                bat "docker-compose -f grid.yaml up --scale chrome=2 -d"
-                bat "set BROWSER=chrome"
-                bat "docker-compose -f selenium.yaml up"
+
+    stages{
+
+        stage('Start Grid'){
+            steps{
+                sh "docker-compose -f grid.yaml up -d"
             }
         }
-        stage('Grid down') {
-            steps {
-                bat "docker-compose -f grid.yaml down"
-                bat "docker-compose -f selenium.yaml down"
+
+        stage('Run Test'){
+            steps{
+                sh "docker-compose -f selenium.yaml up --pull=always"
             }
+        }
+
+    }
+
+    post {
+        always {
+            sh "docker-compose -f grid.yaml down"
+            sh "docker-compose -f selenium.yaml down"
+            archiveArtifacts artifacts: 'output/qaplayground_smoke/emailable-report.html', followSymlinks: false
+            archiveArtifacts artifacts: 'output/qaplayground_regression/emailable-report.html', followSymlinks: false
         }
     }
+
 }

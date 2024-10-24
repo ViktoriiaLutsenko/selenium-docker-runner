@@ -2,7 +2,7 @@ services:
   qaplayground_smoke:
     image: tempori/selenium
     environment:
-      - BROWSER=${BROWSER}
+      - BROWSER=chrome
       - HUB_HOST=hub
       - THREAD_COUNT=3
       - TEST_SUITE=smoke.xml
@@ -11,7 +11,7 @@ services:
   qaplayground_regression:
     image: tempori/selenium
     environment:
-      - BROWSER=${BROWSER}
+      - BROWSER=firefox
       - HUB_HOST=hub
       - THREAD_COUNT=1
       - TEST_SUITE=regression.xml
