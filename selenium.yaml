@@ -1,0 +1,19 @@
+services:
+  qaplayground_smoke:
+    image: tempori/selenium
+    environment:
+      - BROWSER=${BROWSER}
+      - HUB_HOST=hub
+      - THREAD_COUNT=3
+      - TEST_SUITE=smoke.xml
+    volumes:
+      - ./output/qaplayground_smoke:/home/selenium-docker/test-output
+  qaplayground_regression:
+    image: tempori/selenium
+    environment:
+      - BROWSER=${BROWSER}
+      - HUB_HOST=hub
+      - THREAD_COUNT=1
+      - TEST_SUITE=regression.xml
+    volumes:
+      - ./output/qaplayground_regression:/home/selenium-docker/test-output
