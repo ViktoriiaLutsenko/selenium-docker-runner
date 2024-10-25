@@ -7,4 +7,4 @@ services:
       - THREAD_COUNT=3
       - TEST_SUITE
     volumes:
-      - ./output:/home/selenium-docker/test-output
+      - ./output/test-suite:/home/selenium-docker/test-output
