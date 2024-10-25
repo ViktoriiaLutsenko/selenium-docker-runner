@@ -4,7 +4,7 @@ services:
     environment:
       - BROWSER
       - HUB_HOST=hub
-      - THREAD_COUNT=3
+      - THREAD_COUNT=1
       - TEST_SUITE
     volumes:
       - ./output/test-suite:/home/selenium-docker/test-output
