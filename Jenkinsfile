@@ -4,6 +4,7 @@ pipeline{
 
     parameters {
       choice choices: ['chrome', 'firefox'], description: 'Select a browser: chrome, firefox', name: 'BROWSER'
+      choice choices: ['smoke.xml', 'regression.xml'], description: 'Select a browser: smoke.xml, regression.xml', name: 'TEST_SUITE'
     }
 
 
@@ -19,7 +20,7 @@ pipeline{
             steps{
                 bat "docker-compose -f selenium.yaml  up --pull=always"
                 script {
-                    if(fileExists('output/qaplayground_smoke/testng-failed.xml') || fileExists('output/qaplayground_regression/testng-failed.xml'))
+                    if(fileExists('output/test-suite/testng-failed.xml'))
                     error('failed test found')
                 }
             }
