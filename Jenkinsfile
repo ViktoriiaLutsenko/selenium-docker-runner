@@ -18,6 +18,10 @@ pipeline{
         stage('Run Test'){
             steps{
                 bat "docker-compose -f selenium.yaml  up --pull=always"
+                script {
+                    if(fileExists('output/qaplayground_smoke/testng-failed.html') || fileExists('output/qaplayground_regression/testng-failed.html'))
+                    error('failed test found')
+                }
             }
         }
 
