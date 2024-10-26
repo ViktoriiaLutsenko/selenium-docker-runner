@@ -12,13 +12,13 @@ pipeline{
 
         stage('Start Grid'){
             steps{
-                bat "docker-compose -f grid.yaml up --scale ${params.BROWSER}=1 -d"
+                sh "docker-compose -f grid.yaml up --scale ${params.BROWSER}=1 -d"
             }
         }
 
         stage('Run Test'){
             steps{
-                bat "docker-compose -f selenium.yaml  up --pull=always"
+                sh "docker-compose -f selenium.yaml  up --pull=always"
                 script {
                     if(fileExists('output/test-suite/testng-failed.xml'))
                     error('failed test found')
@@ -30,8 +30,8 @@ pipeline{
 
     post {
         always {
-            bat "docker-compose -f grid.yaml down"
-            bat "docker-compose -f selenium.yaml down"
+            sh "docker-compose -f grid.yaml down"
+            sh "docker-compose -f selenium.yaml down"
             archiveArtifacts artifacts: 'output/test-suite/emailable-report.html', followSymlinks: false
         }
     }
